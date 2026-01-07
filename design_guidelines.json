@@ -1,0 +1,172 @@
+{
+  "project_name": "Little Luxe GETAWAYS by Carly",
+  "design_philosophy": {
+    "theme": "Light Mode (Warm Earthy)",
+    "vibe": "Inviting, Personalized, Boutique Luxury, Organized",
+    "core_concept": "The Travel Journal - A digital experience that feels like flipping through a curated travel magazine.",
+    "principles": [
+      "Fusion: Editorial Typography + SaaS Functionality",
+      "Emotion: Warmth over sterility. Use textures and soft tones.",
+      "Content: Imagery is the hero. The form is the guide.",
+      "Negative Space: Generous padding to create a sense of luxury and ease."
+    ]
+  },
+  "typography": {
+    "font_family": {
+      "heading": "Playfair Display, serif",
+      "body": "Manrope, sans-serif",
+      "accent": "Caveat, cursive"
+    },
+    "scale": {
+      "h1": "text-4xl md:text-6xl font-bold tracking-tight leading-tight",
+      "h2": "text-3xl md:text-4xl font-semibold tracking-tight",
+      "h3": "text-2xl font-medium",
+      "body_lg": "text-lg leading-relaxed",
+      "body_base": "text-base leading-relaxed text-stone-600",
+      "caption": "text-sm text-stone-500 uppercase tracking-widest"
+    },
+    "usage_rules": [
+      "Use 'Playfair Display' for all Section Headings and Hero Text.",
+      "Use 'Manrope' for all form labels, inputs, and body text.",
+      "Use 'Caveat' sparingly for 'handwritten' notes or accents (e.g., 'Your dream trip starts here')."
+    ]
+  },
+  "colors": {
+    "palette": {
+      "primary": "#C17C59",
+      "primary_foreground": "#FFFFFF",
+      "secondary": "#5F6F52",
+      "secondary_foreground": "#FFFFFF",
+      "background": "#FDFCF8",
+      "foreground": "#2D2D2D",
+      "muted": "#F5F5F0",
+      "muted_foreground": "#78716C",
+      "accent": "#E8B4B8",
+      "border": "#E7E5E4",
+      "input": "#F5F5F4",
+      "ring": "#C17C59"
+    },
+    "semantic": {
+      "brand_primary": "Terracotta (Warmth, Action)",
+      "brand_secondary": "Sage Green (Nature, Calm)",
+      "surface_main": "Warm Sand / Off-White",
+      "text_main": "Charcoal (Not Black)",
+      "error": "#EF4444",
+      "success": "#10B981"
+    },
+    "tailwind_config_extension": {
+      "colors": {
+        "terracotta": "#C17C59",
+        "sage": "#5F6F52",
+        "sand": "#FDFCF8",
+        "charcoal": "#2D2D2D",
+        "dusty-rose": "#E8B4B8"
+      }
+    }
+  },
+  "layout": {
+    "grid_system": "Bento Grid (Mode A for Marketing, Mode B for Dashboard)",
+    "spacing": "Generous. Use p-8 to p-12 for containers.",
+    "container_width": "max-w-7xl mx-auto",
+    "border_radius": {
+      "default": "rounded-xl",
+      "card": "rounded-2xl",
+      "button": "rounded-full"
+    },
+    "strategies": {
+      "wizard_layout": "Split Screen: Left 40% (Image/Brand), Right 60% (Form). On Mobile: Top Image (25vh), Bottom Form.",
+      "dashboard_layout": "Sidebar Navigation + Card-based Grid Content Area."
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-terracotta text-white hover:bg-terracotta/90 rounded-full px-8 py-3 font-medium transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5",
+      "secondary": "bg-stone-100 text-stone-800 hover:bg-stone-200 rounded-full px-6 py-2 font-medium transition-all",
+      "outline": "border-2 border-terracotta text-terracotta hover:bg-terracotta/10 rounded-full px-6 py-2 font-medium transition-all"
+    },
+    "inputs": {
+      "style": "bg-white border-stone-200 focus:border-terracotta focus:ring-terracotta rounded-lg px-4 py-3 text-stone-800 placeholder:text-stone-400 transition-all shadow-sm",
+      "label": "block text-sm font-medium text-stone-700 mb-1.5"
+    },
+    "cards": {
+      "style": "bg-white rounded-2xl border border-stone-100 shadow-sm hover:shadow-md transition-all p-6"
+    },
+    "progress_bar": {
+      "style": "h-2 bg-stone-200 rounded-full overflow-hidden",
+      "indicator": "h-full bg-terracotta transition-all duration-500 ease-out"
+    }
+  },
+  "visual_enhancers": {
+    "shadows": "Soft, diffuse shadows. shadow-[0_8px_30px_rgb(0,0,0,0.04)]",
+    "textures": "Subtle grain overlay on the background (opacity 0.03) to give a paper feel.",
+    "glassmorphism": "Use sparingly. backdrop-blur-md bg-white/80 border border-white/20 for sticky headers or floating actions.",
+    "icons": "Lucide React (Stroke width 1.5px for elegance)."
+  },
+  "motion": {
+    "page_transition": "Fade in + Slide up (y: 20px -> 0px, opacity: 0 -> 1)",
+    "hover_effects": "Scale up (1.02) + Shadow increase",
+    "stagger": "Stagger children by 0.1s"
+  },
+  "image_assets": {
+    "logo_placeholder": "Text-based logo using 'Playfair Display' in Terracotta color.",
+    "wizard_images": {
+      "home": {
+        "url": "https://images.unsplash.com/photo-1766910701111-9eee02328e95?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "alt": "Couple walking on tropical beach at sunset",
+        "context": "Landing Page / Welcome Screen"
+      },
+      "step_1_trip_details": {
+        "url": "https://images.unsplash.com/photo-1691522508832-14482bbcefc3?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "alt": "European city street architecture",
+        "context": "Destinations & Dates"
+      },
+      "step_2_group_budget": {
+        "url": "https://images.unsplash.com/photo-1761039265583-9489b4246454?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "alt": "Luxury hotel room balcony",
+        "context": "Group Size & Budget"
+      },
+      "step_3_travel_style": {
+        "url": "https://images.unsplash.com/photo-1759767119566-e7dad33d540b?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "alt": "Safari jeep adventure",
+        "context": "Travel Preferences"
+      },
+      "step_4_flights": {
+        "url": "https://images.unsplash.com/photo-1710028267880-f34d75a5ead6?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "alt": "Airplane window view",
+        "context": "Transport Preferences"
+      },
+      "step_5_experiences": {
+        "url": "https://images.unsplash.com/photo-1766735325500-adfbea156bac?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "alt": "Couple dancing on beach",
+        "context": "Activities & Experiences"
+      },
+      "step_6_practical": {
+        "url": "https://images.unsplash.com/photo-1667604946733-c7dd5b992d2e?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "alt": "Cozy interior table setting",
+        "context": "Dietary & Accessibility"
+      },
+      "step_7_contact": {
+        "url": "https://images.unsplash.com/photo-1758716768666-2692b302a5e7?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "alt": "Modern white resort building",
+        "context": "Contact Info & Submit"
+      }
+    }
+  },
+  "instructions_to_main_agent": [
+    "1. SETUP: Install 'lucide-react', 'framer-motion', 'clsx', 'tailwind-merge'.",
+    "2. FONTS: Import 'Playfair Display' and 'Manrope' from Google Fonts in index.css.",
+    "3. TAILWIND: Update tailwind.config.js with the custom colors (terracotta, sage, sand, etc.) and font families.",
+    "4. LAYOUT: Build a 'WizardLayout' component that handles the split-screen logic and image transitions based on the current step.",
+    "5. STATE: Use a global state (Context or Zustand) to manage the multi-step form data.",
+    "6. ADMIN: Build the Admin Dashboard with a separate layout (Sidebar + Content). Use a table component for inquiries.",
+    "7. ANIMATION: Ensure every step transition is smooth. Use AnimatePresence from framer-motion.",
+    "8. DATA-TESTID: Add data-testid to all inputs and buttons (e.g., 'input-destination', 'btn-next-step')."
+  ],
+  "universal_guidelines": [
+    "Do not use gradients for backgrounds. Use solid warm colors or subtle textures.",
+    "Avoid pure black (#000000). Use Charcoal (#2D2D2D) for text.",
+    "Ensure all text has sufficient contrast against the background.",
+    "Use 'sonner' for toast notifications.",
+    "Create reusable UI components in src/components/ui matching the design system."
+  ]
+}
