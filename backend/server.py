@@ -1,4 +1,8 @@
-from fastapi import FastAPI, APIRouter, HTTPException, Query
+from fastapi import FastAPI, APIRouter, HTTPException, Query, Depends
+from fastapi.security import OAuth2PasswordBearer
+from passlib.context import CryptContext
+from jose import jwt, JWTError
+from datetime import timedelta
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -23,6 +27,40 @@ app = FastAPI()
 
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
+
+# ===== Admin Auth =====
+JWT_SECRET = os.environ.get("JWT_SECRET")
+ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL")
+ADMIN_PASSWORD_HASH = os.environ.get("ADMIN_PASSWORD_HASH")
+JWT_ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 8  # 8 hours
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/admin/login")
+
+
+def verify_password(plain_password: str, password_hash: str) -> bool:
+    return pwd_context.verify(plain_password, password_hash)
+
+
+def create_access_token(subject: str) -> str:
+    expire = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    to_encode = {"sub": subject, "exp": expire}
+    return jwt.encode(to_encode, JWT_SECRET, algorithm=JWT_ALGORITHM)
+
+
+def require_admin(token: str = Depends(oauth2_scheme)) -> str:
+    if not JWT_SECRET or not ADMIN_EMAIL or not ADMIN_PASSWORD_HASH:
+        raise HTTPException(status_code=500, detail="Admin auth not configured")
+    try:
+        payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        email = payload.get("sub")
+        if not email or email != ADMIN_EMAIL:
+            raise HTTPException(status_code=401, detail="Unauthorized")
+        return email
+    except JWTError:
+        raise HTTPException(status_code=401, detail="Unauthorized")
+
 
 # ========== Models ==========
 
@@ -153,6 +191,21 @@ class InquiryStats(BaseModel):
 
 # ========== Routes ==========
 
+class AdminLogin(BaseModel):
+    email: EmailStr
+    password: str
+
+
+@api_router.post("/admin/login")
+async def admin_login(body: AdminLogin):
+    if not ADMIN_EMAIL or not ADMIN_PASSWORD_HASH or not JWT_SECRET:
+        raise HTTPException(status_code=500, detail="Admin auth not configured")
+    if body.email != ADMIN_EMAIL or not verify_password(body.password, ADMIN_PASSWORD_HASH):
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+    token = create_access_token(subject=ADMIN_EMAIL)
+    return {"access_token": token, "token_type": "bearer"}
+
+
 @api_router.get("/")
 async def root():
     return {"message": "Little Luxe GETAWAYS API"}
@@ -171,7 +224,8 @@ async def get_inquiries(
     status: Optional[str] = Query(None),
     search: Optional[str] = Query(None),
     limit: int = Query(100, le=500),
-    skip: int = Query(0)
+    skip: int = Query(0),
+    admin_email: str = Depends(require_admin)
 ):
     query = {}
     if status:
@@ -189,7 +243,7 @@ async def get_inquiries(
 
 
 @api_router.get("/inquiries/stats", response_model=InquiryStats)
-async def get_inquiry_stats():
+async def get_inquiry_stats(admin_email: str = Depends(require_admin)):
     total = await db.travel_inquiries.count_documents({})
     new = await db.travel_inquiries.count_documents({"status": "new"})
     contacted = await db.travel_inquiries.count_documents({"status": "contacted"})
