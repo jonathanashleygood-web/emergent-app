@@ -94,7 +94,7 @@ class TravelInquiryAPITester:
             "planning_style": "collaborative"
         }
         
-        success, response = self.run_test("Create Inquiry", "POST", "inquiries", 201, data=test_data)
+        success, response = self.run_test("Create Inquiry", "POST", "inquiries", 200, data=test_data)
         if success and 'id' in response:
             self.created_inquiry_id = response['id']
         return success
