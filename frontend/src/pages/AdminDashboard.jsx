@@ -31,6 +31,13 @@ import Logo from '../components/Logo';
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
+const getAuthHeaders = () => {
+  const token = localStorage.getItem("admin_token");
+  if (!token) return null;
+  return { Authorization: `Bearer ${token}` };
+};
+
+
 const statusColors = {
   new: 'bg-blue-100 text-blue-800',
   contacted: 'bg-yellow-100 text-yellow-800',
@@ -66,14 +73,22 @@ export const AdminDashboard = () => {
         params.append('search', searchQuery);
       }
       
+      const headers = getAuthHeaders();
+      if (!headers) throw new Error("Not authenticated");
+
       const [inquiriesRes, statsRes] = await Promise.all([
-        axios.get(`${API}/inquiries?${params.toString()}`),
-        axios.get(`${API}/inquiries/stats`)
+        axios.get(`${API}/inquiries?${params.toString()}`, { headers }),
+        axios.get(`${API}/inquiries/stats`, { headers })
       ]);
       
       setInquiries(inquiriesRes.data);
       setStats(statsRes.data);
     } catch (error) {
+      if (error?.response?.status === 401) {
+        localStorage.removeItem("admin_token");
+        navigate("/admin-login");
+        return;
+      }
       console.error('Error fetching inquiries:', error);
       toast.error('Failed to load inquiries');
     } finally {
@@ -82,6 +97,11 @@ export const AdminDashboard = () => {
   };
 
   useEffect(() => {
+    const headers = getAuthHeaders();
+    if (!headers) {
+      navigate("/admin-login");
+      return;
+    }
     fetchInquiries();
   }, [statusFilter]);
 
