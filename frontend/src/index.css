@@ -90,3 +90,107 @@ h1, h2, h3, .font-heading {
 .font-accent {
     font-family: 'Caveat', cursive;
 }
+
+/* ===== Fix Emergent badge overlapping Continue button (mobile) ===== */
+:root {
+  --emergent-height: 48px;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-bottom: calc(var(--emergent-height) + 80px);
+  }
+
+  /* Emergent badge pinned to true bottom and non-blocking */
+  a[href*="emergent"],
+  img[alt*="Emergent"],
+  [class*="emergent"] {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    padding-bottom: env(safe-area-inset-bottom);
+    z-index: 1 !important;
+    pointer-events: none !important;
+  }
+
+  /* Continue button floats safely above badge */
+  .continue-button,
+  button.continue {
+    position: fixed !important;
+    bottom: calc(var(--emergent-height) + 16px) !important;
+    left: 50% !important;
+    transform: translateX(-50%);
+    z-index: 10 !important;
+  }
+}
+/* ===== End Emergent fix ===== */
+
+/* ===== Mobile fix: Emergent badge stays at bottom, Continue sits above it ===== */
+:root { --emergent-height: 48px; }
+
+@media (max-width: 768px) {
+  body {
+    padding-bottom: calc(var(--emergent-height) + 96px);
+  }
+
+  /* Emergent badge: true bottom, never blocks clicks */
+  a[href*="emergent"],
+  img[alt*="Emergent"],
+  [class*="emergent"] {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    padding-bottom: env(safe-area-inset-bottom);
+    z-index: 1 !important;
+    pointer-events: none !important;
+  }
+
+  /* Only your Continue button (we'll add this class next) */
+  .continue-button {
+    position: fixed !important;
+    bottom: calc(var(--emergent-height) + 16px) !important;
+    left: 50% !important;
+    transform: translateX(-50%);
+    z-index: 10 !important;
+  }
+}
+/* ===== End mobile fix ===== */
+
+/* ===== Mobile fix: Emergent badge stays at bottom, CTA sits above it ===== */
+:root { --emergent-height: 48px; }
+
+@media (max-width: 768px) {
+  /* make room for fixed footer badge + fixed CTA */
+  body { padding-bottom: calc(var(--emergent-height) + 96px); }
+
+  /* Emergent badge: pin to true bottom, never block taps */
+  a[href*="emergent"],
+  img[alt*="Emergent"],
+  [class*="emergent"] {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    padding-bottom: env(safe-area-inset-bottom);
+    z-index: 1 !important;
+    pointer-events: none !important;
+  }
+
+  /* only the form CTA button (we'll add this class in InquiryForm.jsx) */
+  .continue-button {
+    position: fixed !important;
+    bottom: calc(var(--emergent-height) + 16px) !important;
+    left: 50% !important;
+    transform: translateX(-50%);
+    z-index: 10 !important;
+  }
+}
+/* ===== End mobile fix ===== */

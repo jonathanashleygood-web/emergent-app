@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'sonner';
@@ -19,6 +19,8 @@ const InquiryFormContent = () => {
   const { currentStep, formData } = useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {\n    window.scrollTo({ top: 0, behavior: 'smooth' });\n  }, [currentStep]);\n
 
   const handleSubmit = async () => {
     // Validate required fields
