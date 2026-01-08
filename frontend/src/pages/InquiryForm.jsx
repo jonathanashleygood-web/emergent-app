@@ -20,7 +20,11 @@ const InquiryFormContent = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {\n    window.scrollTo({ top: 0, behavior: 'smooth' });\n  }, [currentStep]);\n
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentStep]);
+
+
 
   const handleSubmit = async () => {
     // Validate required fields
